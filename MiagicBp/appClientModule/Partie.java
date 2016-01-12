@@ -237,7 +237,18 @@ public static String get(String url) throws IOException{
 	public String getStatut() {
 		return statut;
 	} 
-	
+	public void setBotMiagic(Robot robot) {
+		this.botMiagic = robot;
+	}
+	public Robot getBotMiagic() {
+		return this.botMiagic;
+	} 
+	public void setBotAdverse(Robot robot) {
+		this.botAdverse = robot;
+	}
+	public Robot getBotAdverse() {
+		return this.botAdverse;
+	} 
 	/* Affichage */ 
 	
 

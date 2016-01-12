@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Robot {
 
@@ -6,6 +7,7 @@ public class Robot {
     private int nbBullet; 
     private int nbBouclier; 
     private boolean focused;
+    private ArrayList<String> coups = new ArrayList<String>();
     
     
     public Robot(String numJoueur,int nbVies,int nbBullet,int nbBouclier,boolean focused){
@@ -20,7 +22,14 @@ public class Robot {
     
     
  
-    
+	public ArrayList getCoups() {
+		return coups;
+	}
+
+	public void setCoups(ArrayList coups) {
+		this.coups = coups;
+	}
+	
 	public void setNumJoeur(String numJoeur) {
 		this.numJoeur = numJoeur;
 	}
