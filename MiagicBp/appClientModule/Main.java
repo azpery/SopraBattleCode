@@ -6,11 +6,14 @@ import java.net.URL;
 
 
 
+
+
 	public class Main {
 	
 		  String idPartie = ""; 
 		  String idEquipe = ""; 
 
+		 
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import ia.IA;
 
 public class Robot {
 
@@ -8,7 +9,7 @@ public class Robot {
     private int nbBouclier; 
     private boolean focused;
     private ArrayList<String> coups = new ArrayList<String>();
-    
+    public IA i; 
     
     public Robot(String numJoueur,int nbVies,int nbBullet,int nbBouclier,boolean focused){
     	
@@ -17,6 +18,7 @@ public class Robot {
     	this.nbBullet = nbBullet; 
     	this.nbBouclier = nbBouclier; 
     	this.numJoeur = numJoueur; 
+    	i = new IA(); 
     	
     }
     
@@ -67,10 +69,10 @@ public class Robot {
 	public String toString(){
 		
 		String s ="------------- \n"; 
-		s += "\nNum joueur" + this.numJoeur; 
+		s += "\nNum joueur " + this.numJoeur; 
 		s += "\nNb vies " + this.nbVies; 
-		s += "\nNb bouclier" + this.nbBouclier; 
-		s += "\nNb balles" + this.nbBullet; 
+		s += "\nNb bouclier " + this.nbBouclier; 
+		s += "\nNb balles " + this.nbBullet; 
 		
 		return s; 
 		
