@@ -58,10 +58,10 @@ public class Robot {
 	public String toString(){
 		
 		String s ="------------- \n"; 
-		s += "\nNum joueur" + this.numJoeur; 
+		s += "\nNum joueur " + this.numJoeur; 
 		s += "\nNb vies " + this.nbVies; 
-		s += "\nNb bouclier" + this.nbBouclier; 
-		s += "\nNb balles" + this.nbBullet; 
+		s += "\nNb bouclier " + this.nbBouclier; 
+		s += "\nNb balles " + this.nbBullet; 
 		
 		return s; 
 		

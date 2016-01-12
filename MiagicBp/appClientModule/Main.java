@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.swing.JFrame;
+
 
 
 	public class Main {
@@ -11,6 +13,8 @@ import java.net.URL;
 		  String idPartie = ""; 
 		  String idEquipe = ""; 
 
+		  JFrame fenetre = new JFrame();
+		  
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		

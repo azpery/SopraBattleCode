@@ -114,7 +114,8 @@ public static String get(String url) throws IOException{
     	
     	
     	if(statut.equals("CANPLAY")){
-    	
+    	 
+    		getDernierCoup();
     		System.out.println("IFFFF Statut partie = " + statut);
     		
     		try {
@@ -193,7 +194,12 @@ public static String get(String url) throws IOException{
     }
     
     
-
+    public String getDernierCoup() throws IOException{
+    
+    	String s=  get("http://www.battlearena.io/battle-ws/duel/game/getlastmove/"+idPartie+"/"+idEquipe);
+    	System.out.println("\n\n\n\n\n DERNIER COUP JOUE " + s);
+    	return s; 
+    }
     
     
     
