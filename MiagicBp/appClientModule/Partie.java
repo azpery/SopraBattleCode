@@ -3,7 +3,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import ia.IA;
 
 
 public class Partie {
@@ -19,6 +22,8 @@ public class Partie {
 	private Robot botMiagic;  
 	private Robot botAdverse;
 
+	private IA ia; 
+	private ArrayList<String> coupsAdv; 
 	
 	
 	public Partie(String idEquipe){
@@ -28,7 +33,9 @@ public class Partie {
 		botMiagic = new Robot(idEquipe, 0, 0, 0, false); 
 		botAdverse = new Robot(idEquipe, 0, 0, 0, false); 
 		
+		coupsAdv = new ArrayList<String>(); 
 		
+		ia = new IA();
 	
 	}
 	
@@ -115,7 +122,8 @@ public static String get(String url) throws IOException{
     	
     	if(statut.equals("CANPLAY")){
     	 
-    		getDernierCoup();
+    		ia.devinerFuturCoup(coupsAdv,getDernierCoup() );
+    		
     		System.out.println("IFFFF Statut partie = " + statut);
     		
     		try {

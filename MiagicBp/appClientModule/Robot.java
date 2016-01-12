@@ -1,3 +1,4 @@
+import ia.IA;
 
 public class Robot {
 
@@ -6,7 +7,7 @@ public class Robot {
     private int nbBullet; 
     private int nbBouclier; 
     private boolean focused;
-    
+    public IA i; 
     
     public Robot(String numJoueur,int nbVies,int nbBullet,int nbBouclier,boolean focused){
     	
@@ -15,6 +16,7 @@ public class Robot {
     	this.nbBullet = nbBullet; 
     	this.nbBouclier = nbBouclier; 
     	this.numJoeur = numJoueur; 
+    	i = new IA(); 
     	
     }
     
