@@ -14,6 +14,7 @@ import java.net.URL;
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		
+	
 		String idEquipe = get("http://www.battlearena.io/battle-ws/duel/player/getIdEquipe/Miagic%20Bot/Universite2Nantes2016$");
 		System.out.println(idEquipe); 
 		
@@ -26,13 +27,17 @@ import java.net.URL;
 		System.out.println("Dans moin statut : " + p.getStatut());
 	
 	    while(p.getStatut().equals("CANTPLAY")||p.getStatut().equals("CANPLAY")){
-		p.Jouer();
+		
+	    p.majRobotsPractice(); 	
+	    System.out.println(p);	
+	    
+	    p.Jouer();
 		p.majStatut();
+		
 	    }
 	    p.majStatut();
 	    System.out.println("FIN :"+ p.getStatut());
 	    
-			
 			
 		
 	}

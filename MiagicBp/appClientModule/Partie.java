@@ -10,9 +10,10 @@ public class Partie {
 
 	private int lvlmin = 1; 
 	private int lvlmax = 6;
+	
 	private String idPartie; 
 	private String idEquipe; 
-	
+   
 	private String statut;
 	
 	private Robot botMiagic;  
@@ -26,6 +27,7 @@ public class Partie {
 	    
 		botMiagic = new Robot(idEquipe, 0, 0, 0, false); 
 		botAdverse = new Robot(idEquipe, 0, 0, 0, false); 
+		
 		
 	
 	}
@@ -121,7 +123,9 @@ public static String get(String url) throws IOException{
 				e.printStackTrace();
 			}
     		
-			// TRAITEMENT = PARSE + MAJ DES VALEURS DES BOTS EN LOCAL //
+			
+    		
+    		
     		
 			// Prise de d���cision // 
 			
@@ -130,7 +134,53 @@ public static String get(String url) throws IOException{
         
         	
     	return statut; 
+    } // Fin jouer // 
+    
+ // RECUPERATION DONNES DE JEUX  + TRAITEMENTS  INFORMATIONS 
+    
+   // Parseur //  
+	public String[] Parser() throws IOException{
+		
+		String datas = getBoard();
+		String delims = "[;]";
+		String[] tokens = datas.split(delims);
+		
+		return tokens; 
+	}
+	
+	// Traitement Partie practice // 
+    /*
+     * @warning ATTENTION CETTE METHODE EST A MODIFIER SI LE FORMAT CHANGE DANS LE PRACTICE // 
+     * @description : On suppose que le premier robot à jouer est le notre // 
+     */
+    public void majRobotsPractice() throws IOException{
+    	
+    	String[] tokens; 
+    	tokens= Parser();
+    	
+    	// MAJ VALEURS DE NOTRE BOT  // 
+    	botMiagic.setNumJoeur("Joueur 1");
+    	
+    	botMiagic.setNbVies(tokens[1]);
+    	
+    	botMiagic.setNbBullet(tokens[2]);
+    	
+    	botMiagic.setNbBouclier(tokens[3]);
+    	
+    	// MAJ VALEURS DE l'ADVERSAIRE PRACTICE // 
+    	botAdverse.setNumJoeur("Joueur 2");
+    	
+    	botAdverse.setNbVies(tokens[5]);
+    	
+    	botAdverse.setNbBullet(tokens[6]);
+    	
+    	botAdverse.setNbBouclier(tokens[7]);
     }
+    
+	
+	
+	
+	
     
     
     public  void majStatut() throws IOException{
@@ -141,6 +191,14 @@ public static String get(String url) throws IOException{
     	System.out.println("Dans get board"); 
     	return get("http://www.battlearena.io/battle-ws/duel/game/board/"+idPartie+"?format=JSON)");
     }
+    
+    
+
+    
+    
+    
+
+
     
     public String coup() throws IOException{
     	
@@ -154,8 +212,18 @@ public static String get(String url) throws IOException{
     }
     
 	
+    
+    /* Requests */ 
+    
+    
+    
+    
+    
+    
+    
+    
 	
-	
+	/* Getters and Setters */ 
 	
 	public void setId(String id) {
 		this.idPartie = id;
@@ -170,5 +238,19 @@ public static String get(String url) throws IOException{
 		return statut;
 	} 
 	
+	/* Affichage */ 
+	
+
+	public String toString(){
+		
+		
+		
+		String s = "\n---------------------------------------------\n";
+		s+= "\n" + this.botMiagic; 
+		s+= "\n" +  this.botAdverse; 
+		s += "\n---------------------------------------------\n";
+		
+		return s; 
+	}
 	
 }

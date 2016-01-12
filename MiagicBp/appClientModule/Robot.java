@@ -27,20 +27,21 @@ public class Robot {
 	public String getNumJoeur() {
 		return numJoeur;
 	}
-	public void setNbVies(int nbVies) {
-		this.nbVies = nbVies;
+	public void setNbVies(String tokens) {
+		
+		this.nbVies =  Integer.parseInt(tokens);
 	}
 	public int getNbVies() {
 		return nbVies;
 	}
-	public void setNbBullet(int nbBullet) {
-		this.nbBullet = nbBullet;
+	public void setNbBullet(String tokens) {
+		this.nbBullet =  Integer.parseInt(tokens);
 	}
 	public int getNbBullet() {
 		return nbBullet;
 	}
-	public void setNbBouclier(int nbBouclier) {
-		this.nbBouclier = nbBouclier;
+	public void setNbBouclier(String tokens) {
+		this.nbBouclier =  Integer.parseInt(tokens);
 	}
 	public int getNbBouclier() {
 		return nbBouclier;
@@ -52,4 +53,18 @@ public class Robot {
 		return focused;
 	} 
     
+	
+
+	public String toString(){
+		
+		String s ="------------- \n"; 
+		s += "\nNum joueur" + this.numJoeur; 
+		s += "\nNb vies " + this.nbVies; 
+		s += "\nNb bouclier" + this.nbBouclier; 
+		s += "\nNb balles" + this.nbBullet; 
+		
+		return s; 
+		
+	}
+	
 }
