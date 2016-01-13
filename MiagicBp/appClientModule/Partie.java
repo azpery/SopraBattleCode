@@ -1,4 +1,4 @@
-package battleCode;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,23 +20,21 @@ public class Partie {
    
 	private String statut;
 	
-	private Bot botMiagic;  
-	private Bot botAdverse;
+	private Robot botMiagic;  
+	private Robot botAdverse;
 
 	private IA ia; 
 	private ArrayList<String> coupsAdv; 
-	private ArrayList<String> coupsMia;
 	
 	
 	public Partie(String idEquipe){
 		
 		this.idEquipe = idEquipe; 
 	    
-		botMiagic = new Bot(idEquipe, 0, 0, 0, false); 
-		botAdverse = new Bot(idEquipe, 0, 0, 0, false); 
+		botMiagic = new Robot(idEquipe, 0, 0, 0, false); 
+		botAdverse = new Robot(idEquipe, 0, 0, 0, false); 
 		
 		coupsAdv = new ArrayList<String>(); 
-		coupsMia = new ArrayList<String>(); 
 		
 		ia = new IA();
 	
@@ -125,7 +123,7 @@ public static String get(String url) throws IOException{
     	
     	if(statut.equals("CANPLAY")){
     	 
-    		ia.analyseHabits(this.botMiagic,this.botAdverse,coupsMia,coupsAdv,getDernierCoup());
+    		ia.devinerFuturCoup(coupsAdv,getDernierCoup() );
     		
     		System.out.println("IFFFF Statut partie = " + statut);
     		
@@ -139,14 +137,9 @@ public static String get(String url) throws IOException{
     		
     		
     		
-			// Prise de d���cision // 
-			String c = coup();
-			coupsMia.add(c);
+			// Prise de d?????????cision // 
 			
-			
-    		
-			System.out.println(c);
-			
+			System.out.println(coup());
     	}
         
         	
@@ -168,7 +161,7 @@ public static String get(String url) throws IOException{
 	// Traitement Partie practice // 
     /*
      * @warning ATTENTION CETTE METHODE EST A MODIFIER SI LE FORMAT CHANGE DANS LE PRACTICE // 
-     * @description : On suppose que le premier robot à jouer est le notre // 
+     * @description : On suppose que le premier robot ?? jouer est le notre // 
      */
     public void majRobotsPractice() throws IOException{
     	
@@ -259,7 +252,18 @@ public static String get(String url) throws IOException{
 	public String getStatut() {
 		return statut;
 	} 
-	
+	public void setBotMiagic(Robot robot) {
+		this.botMiagic = robot;
+	}
+	public Robot getBotMiagic() {
+		return this.botMiagic;
+	} 
+	public void setBotAdverse(Robot robot) {
+		this.botAdverse = robot;
+	}
+	public Robot getBotAdverse() {
+		return this.botAdverse;
+	} 
 	/* Affichage */ 
 	
 
