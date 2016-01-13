@@ -3,6 +3,8 @@ package ia;
 import java.util.ArrayList;
 import java.util.Random;
 
+import battleCode.Bot;
+
 public class Schema {
 	private String coup;
 	private String coupPrecedent;
@@ -33,7 +35,7 @@ public class Schema {
 		}
 		this.puissance = vretour;
 	}
-	public static String comparerValeurCoupsSuivant(ArrayList<Schema> s){
+	public static String comparerValeurCoupsSuivant(ArrayList<Schema> s, Bot adve){
 		String vretour = "NA";
 		int reload = 0;
 		int shoot = 0;
@@ -44,13 +46,19 @@ public class Schema {
 			valCoup = Coups.valueOf(s.get(i).getCoupSuivant());
 			switch(valCoup){
 			case SHOOT:
-				shoot++;
+				if(adve.getNbBullet()>0){
+					shoot++;
+				}
 				break;
 			case AIM:
-				aim++;
+				if(adve.getNbBullet()>0){
+					aim++;
+				}
 				break;
 			case COVER:
-				cover++;
+				if(adve.getNbBouclier()>0){
+					cover++;
+				}
 				break;
 			case RELOAD: 
 				reload++;

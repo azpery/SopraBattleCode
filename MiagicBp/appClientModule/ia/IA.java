@@ -14,7 +14,7 @@ public class IA {
 	private ArrayList<Schema> schemasDeux;
 	private ArrayList<Schema> schemasUn;
 	private ArrayList<Schema> schemasZero;
-    private int pdvCritique = 4;  // Niveau critique à éviter // 
+	private int pdvCritique = 4;  // Niveau critique à éviter // 
 
 
 	public IA(){
@@ -23,7 +23,7 @@ public class IA {
 		this.schemasDeux = new ArrayList<Schema>();
 		this.schemasUn = new ArrayList<Schema>();
 		this.schemasZero = new ArrayList<Schema>();
-		
+
 	}
 
 
@@ -75,7 +75,7 @@ public class IA {
 		{
 			coupsAdv.add(dernierCoup); 
 		}
-		
+
 		if(coupsAdv.size() > 2){
 			Schema cible = new Schema(dernierCoup, coupsAdv.get(coupsAdv.size() - 2), coupsMiagic.get(coupsMiagic.size() - 1));
 			//this.schemas.add(cible);
@@ -107,31 +107,31 @@ public class IA {
 
 			}
 			if(this.schemasTrois.size()>0){
-				c = Schema.comparerValeurCoupsSuivant(this.schemasTrois);
-			} else 
-				if(this.schemasDeux.size()>0){
-					c = Schema.comparerValeurCoupsSuivant(this.schemasDeux);
-				} else 
-					if(this.schemasUn.size()>0){
-						c = Schema.comparerValeurCoupsSuivant(this.schemasUn);
-					} else 
-						if(this.schemasZero.size()>0){
-							c = Schema.comparerValeurCoupsSuivant(this.schemasZero);
-						} 
+				c = Schema.comparerValeurCoupsSuivant(this.schemasTrois, adve);
+			}  
+			if(this.schemasDeux.size()>0&&c=="NA"){
+				c = Schema.comparerValeurCoupsSuivant(this.schemasDeux, adve);
+			}  
+			if(this.schemasUn.size()>0&&c=="NA"){
+				c = Schema.comparerValeurCoupsSuivant(this.schemasUn, adve);
+			}  
+			if(this.schemasZero.size()>0&&c=="NA"){
+				c = Schema.comparerValeurCoupsSuivant(this.schemasZero, adve);
+			} 
 
 		}
 
 		// SI DEFAUT // 
- 
+
 		if(c == "NA"){
-			
-	
+
+
 			if(adve.getNbBullet()>0)
 			{	
 				if( dernierCoup.equals("AIM")){
 					c = "SHOOT"; 
 				}
-				
+
 				if( dernierCoup.equals("RELOAD")){
 					c = "AIM"; 
 				}
@@ -146,12 +146,12 @@ public class IA {
 					}
 				}
 				else{
-						c= "RELOAD";
-					}	
+					c= "RELOAD";
+				}	
 			}
 		}
 		System.out.println("\n FUTUR COUP JOUER PAR ADV :" + c);
-		
+
 		String dernierCoupMiage = "";
 		if(coupsMiagic.size()>0){
 			dernierCoupMiage =coupsMiagic.get(coupsMiagic.size()-1);
@@ -159,16 +159,16 @@ public class IA {
 		else{
 			dernierCoupMiage = "NA";
 		}
-		
+
 		c = deciderAction(dernierCoup,c,dernierCoupMiage,miage,adve);
-		
+
 		System.out.println("ON VA JOUER : " + c);
-		
+
 		return  c; 
 	}
 
 
-	
+
 
 
 	public String deciderAction(String dernierAdv,String predAdv,String dernierMia,Bot miage,Bot adve){
@@ -177,71 +177,71 @@ public class IA {
 
 		boolean shootMia 	  = false; 
 		boolean coverMia	  = false; 
-		
+
 		boolean coverAdv 	  = false; 
-	   
-	
-	    if(miage.getNbBullet()>0){
-    		shootMia = true; 
-	    }
-	    if(miage.getNbBouclier()>0){
-    		coverMia = true; 
-	    }
+
+
+		if(miage.getNbBullet()>0){
+			shootMia = true; 
+		}
+		if(miage.getNbBouclier()>0){
+			coverMia = true; 
+		}
 		if(adve.getNbBouclier()>0){
 			coverAdv = true; 
 		}
-	    
-	    if(dernierMia.equals("AIM")&&dernierAdv.equals("SHOOT")&&adve.getNbVies()>=this.pdvCritique){
-	    	s = "AIM"; 
-	    	decisionPrise = true; 
-	    	
-	    }
-	    
+
+		if(dernierMia.equals("AIM")&&dernierAdv.equals("SHOOT")&&adve.getNbVies()>=this.pdvCritique){
+			s = "AIM"; 
+			decisionPrise = true; 
+
+		}
+
 		// SI NOTRE ADVERSAIRE VA TIRER // 
 		if(predAdv.equals("SHOOT")&&!decisionPrise)
 		{
-		  
+
 			// SOUS CONTRAITES -> TIRER + CACHER // 
-			
+
 			// ****** COVER ***** // 
 			// Pour se cacher -> Contrainte de bouclier // 
-			
+
 			// Pour se cacher il faut absolument un bouclier // 
-			
-				if(coverMia){
-					// On peut se cacher //	
-					// On se pose la question si on doit se cacher // 
-					// Manque de vie | Si l'autre IA à visé // 
-					if(miage.getNbVies()<=this.pdvCritique){
-						s = "COVER";
-						decisionPrise=true; 
-					}
-					else if(dernierAdv.equals("AIM")){
-						s="COVER"; 
-						decisionPrise=true; 
-					}
-					else if(dernierMia.equals("AIM")&&adve.getNbVies()>=this.pdvCritique){
-						s="SHOOT"; 
-						decisionPrise=true; 
-					}
-					else{
-						s = "COVER"; 
-					}
-					
-				}	
-				// ****** SHOOT ***** // 
-				if(!decisionPrise){				// Si pas de décision prise // 
-					if(shootMia){  // Si on a des balles // 
-						s = "SHOOT"; 
-						decisionPrise = true; 
-					}
-					else{ // Si pas de décision 
-						s = "RELOAD"; 
-						decisionPrise = true; 
-					}		
+
+			if(coverMia){
+				// On peut se cacher //	
+				// On se pose la question si on doit se cacher // 
+				// Manque de vie | Si l'autre IA à visé // 
+				if(miage.getNbVies()<=this.pdvCritique){
+					s = "COVER";
+					decisionPrise=true; 
+				}
+				else if(dernierAdv.equals("AIM")){
+					s="COVER"; 
+					decisionPrise=true; 
+				}
+				else if(dernierMia.equals("AIM")&&adve.getNbVies()>=this.pdvCritique){
+					s="SHOOT"; 
+					decisionPrise=true; 
+				}
+				else{
+					s = "COVER"; 
+				}
+
+			}	
+			// ****** SHOOT ***** // 
+			if(!decisionPrise){				// Si pas de décision prise // 
+				if(shootMia){  // Si on a des balles // 
+					s = "SHOOT"; 
+					decisionPrise = true; 
+				}
+				else{ // Si pas de décision 
+					s = "RELOAD"; 
+					decisionPrise = true; 
+				}		
 			}	
 		} // FIN DECISION SHOOT // 
-		
+
 		// SI NOTRE ADVERSAIRE VA VISER // 
 		else if(predAdv.equals("AIM")&&!decisionPrise)
 		{
@@ -262,58 +262,58 @@ public class IA {
 			}
 			else
 			{
-				 s = "RELOAD"; 
-				 decisionPrise = true; 
+				s = "RELOAD"; 
+				decisionPrise = true; 
 			}
 		} // FIN ADVERSAIRE VISER // 
-		
+
 		else if(predAdv.equals("COVER")&&!decisionPrise){
-			
-				// Si on peut tirer // 
-				if(shootMia){
-					if(dernierMia.equals("AIM")&&coverAdv){
-						s = "AIM"; 
-						decisionPrise = true; 
-					}
-					else if(!coverAdv){   
-						if(adve.getNbVies()>pdvCritique){
-							s = "AIM";
-						}
-						else{
-						s = "SHOOT";
-						decisionPrise = true; 
-						}
-					}
-					
+
+			// Si on peut tirer // 
+			if(shootMia){
+				if(dernierMia.equals("AIM")&&coverAdv){
+					s = "AIM"; 
+					decisionPrise = true; 
 				}
-				else{   // Sinon // 
-					 s = "RELOAD"; 
-					 decisionPrise = true; 
-				}
-		}
-		else if(predAdv.equals("RELOAD")&&!decisionPrise){
-				if(shootMia){
-					if(dernierMia.equals("AIM")){
-						s = "SHOOT"; 
-						decisionPrise = true; 
-					}
-					else if(adve.getNbVies()<=this.pdvCritique){
-						s = "SHOOT"; 
-						decisionPrise = true; 
+				else if(!coverAdv){   
+					if(adve.getNbVies()>pdvCritique){
+						s = "AIM";
 					}
 					else{
-						s = "AIM"; 
+						s = "SHOOT";
 						decisionPrise = true; 
 					}
 				}
-				else{   // Sinon // 
-				 s = "RELOAD";
-				 decisionPrise = true; 
-				}	
+
+			}
+			else{   // Sinon // 
+				s = "RELOAD"; 
+				decisionPrise = true; 
+			}
+		}
+		else if(predAdv.equals("RELOAD")&&!decisionPrise){
+			if(shootMia){
+				if(dernierMia.equals("AIM")){
+					s = "SHOOT"; 
+					decisionPrise = true; 
+				}
+				else if(adve.getNbVies()<=this.pdvCritique){
+					s = "SHOOT"; 
+					decisionPrise = true; 
+				}
+				else{
+					s = "AIM"; 
+					decisionPrise = true; 
+				}
+			}
+			else{   // Sinon // 
+				s = "RELOAD";
+				decisionPrise = true; 
+			}	
 		}
 		else if(predAdv.equals("NA")&&!decisionPrise){
-			
-			
+
+
 			if(shootMia){
 				if(dernierMia.equals("RELOAD")){
 					s = "AIM"; 
@@ -325,13 +325,13 @@ public class IA {
 				}
 			}
 			else{   // Sinon // 
-			 s = "RELOAD";
-			 decisionPrise = true; 
+				s = "RELOAD";
+				decisionPrise = true; 
 			}	
 		}
 		return s; 
 	}
-	
+
 
 
 	private enum Coups {
