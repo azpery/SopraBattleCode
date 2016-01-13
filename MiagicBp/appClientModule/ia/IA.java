@@ -220,12 +220,13 @@ public class IA {
 					s="COVER"; 
 					decisionPrise=true; 
 				}
-				else if(dernierMia.equals("AIM")&&adve.getNbVies()>=this.pdvCritique){
+				else if(dernierMia.equals("AIM")&&adve.getNbVies()>=this.pdvCritique&&miage.getNbVies()>this.pdvCritique){
 					s="SHOOT"; 
 					decisionPrise=true; 
 				}
 				else{
 					s = "COVER"; 
+					decisionPrise=true; 
 				}
 
 			}	
@@ -243,19 +244,23 @@ public class IA {
 		} // FIN DECISION SHOOT // 
 
 		// SI NOTRE ADVERSAIRE VA VISER // 
-		else if(predAdv.equals("AIM")&&!decisionPrise)
+		else if(predAdv.equals("AIM"))
 		{
 			if(shootMia) // Si on peut tirer // 
 			{
-				if(adve.getNbVies()<=pdvCritique){ // Si il a peu de point de vie // 
+				if(adve.getNbVies()<pdvCritique){ // Si il a peu de point de vie // 
 					s = "SHOOT"; 
 					decisionPrise = true; 
 				}
-				else if(adve.getNbVies()>pdvCritique&&dernierAdv.equals("SHOOT")){
+				else if(adve.getNbVies()>=pdvCritique&&dernierAdv.equals("SHOOT")){
 					s = "AIM"; 
 					decisionPrise = true; 
 				}
 				else{
+					s = "SHOOT"; 
+					decisionPrise = true; 
+				}
+				if(dernierMia.equals("AIM")&&dernierAdv.equals("SHOOT")&&!decisionPrise){
 					s = "SHOOT"; 
 					decisionPrise = true; 
 				}
@@ -267,7 +272,7 @@ public class IA {
 			}
 		} // FIN ADVERSAIRE VISER // 
 
-		else if(predAdv.equals("COVER")&&!decisionPrise){
+		else if(predAdv.equals("COVER")){
 
 			// Si on peut tirer // 
 			if(shootMia){
@@ -291,7 +296,7 @@ public class IA {
 				decisionPrise = true; 
 			}
 		}
-		else if(predAdv.equals("RELOAD")&&!decisionPrise){
+		else if(predAdv.equals("RELOAD")){
 			if(shootMia){
 				if(dernierMia.equals("AIM")){
 					s = "SHOOT"; 
@@ -311,17 +316,20 @@ public class IA {
 				decisionPrise = true; 
 			}	
 		}
-		else if(predAdv.equals("NA")&&!decisionPrise){
+		else if(predAdv.equals("NA")){
 
 
 			if(shootMia){
-				if(dernierMia.equals("RELOAD")){
+				if(miage.getNbBullet()>0&&adve.getNbVies()>=pdvCritique){
 					s = "AIM"; 
 					decisionPrise = true; 
 				}
-				else {
+				else if(miage.getNbBullet()>0){
 					s = "SHOOT"; 
 					decisionPrise = true; 
+				}else{
+					s = "RELOAD"; 
+					decisionPrise = true;
 				}
 			}
 			else{   // Sinon // 
