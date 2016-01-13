@@ -11,7 +11,7 @@ import battleCode.Bot;
 public class IA {
 
 
-    
+    int pdvCritique = 3;  // Niveau critique à éviter // 
 	
 	public IA(){
 		
@@ -119,6 +119,8 @@ public class IA {
 	}
 	*/
 	
+	
+
 	public String devinerFuturCoup(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup,int nbCoupRestant)
 	{
 		String c = "NA"; 
@@ -161,13 +163,9 @@ public class IA {
 			{	
 				if(coupsMiagic.size()>0){
 					System.out.println("**** DGETBULLET \n\n\n\n\n");
-
-					if(coupsMiagic.get(coupsMiagic.size()-1).equals("AIM")){
-						c = "COVER";
-					}
 				}
 			}
-			if(adve.getNbBullet()>0 && coupsAdv.get(coupsAdv.size()-1).equals("AIM")){
+			if(adve.getNbBullet()>0 && dernierCoup.equals("AIM")){
 						c = "SHOOT"; 
 			}
 			
@@ -181,23 +179,163 @@ public class IA {
 						c= "RELOAD";
 					}	
 			}
-			/*
-			else if(adve.getNbBouclier()==0){
-				if(coupsMiagic.size()>0){
-					if(!coupsMiagic.get(coupsMiagic.size()-1).equals("AIM")){
-						c = "NA";
-					}
-				}
-			}
-			*/
 		}
 		System.out.println("\n\n\n FUTUR COUP JOUER PAR ADV :" + c);
+		
+		String dernierCoupMiage = "";
+		if(coupsMiagic.size()>0){
+			dernierCoupMiage =coupsMiagic.get(coupsMiagic.size()-1);
+		}
+		else{
+			dernierCoupMiage = "NA";
+		}
+		
+		c = deciderAction(dernierCoup,c,dernierCoupMiage,miage,adve);
+		
+		System.out.println("ON VA JOUER : " + c);
 		return  c; 
 	}
 	
 	
+	public String deciderAction(String dernierAdv,String predAdv,String dernierMia,Bot miage,Bot adve){
+		String s =""; 
+		boolean decisionPrise = false; 
+
+		boolean shootMia 	  = false; 
+		boolean coverMia	  = false; 
+	   
 	
+	    if(miage.getNbBullet()>0){
+    		shootMia = true; 
+	    }
+	    if(miage.getNbBouclier()>0){
+    		coverMia = true; 
+	    }
+		
+		// SI NOTRE ADVERSAIRE VA TIRER // 
+		if(predAdv.equals("SHOOT"))
+		{
+		  
+			// SOUS CONTRAITES -> TIRER + CACHER // 
+			
+			// ****** COVER ***** // 
+			// Pour se cacher -> Contrainte de bouclier // 
+			
+			// Pour se cacher il faut absolument un bouclier // 
+			
+				if(coverMia){
+					// On peut se cacher //	
+					// On se pose la question si on doit se cacher // 
+					// Manque de vie | Si l'autre IA à visé // 
+					if(miage.getNbVies()<=this.pdvCritique){
+						s = "COVER";
+						decisionPrise=true; 
+					}
+					if(dernierAdv.equals("AIM")){
+						s="COVER"; 
+						decisionPrise=true; 
+					}
+				}	
+				// ****** SHOOT ***** // 
+				if(!decisionPrise){				// Si pas de décision prise // 
+					if(shootMia){  // Si on a des balles // 
+						s = "SHOOT"; 
+						decisionPrise = true; 
+					}
+					else{ // Si pas de décision 
+						s = "RELOAD"; 
+						decisionPrise = true; 
+					}		
+			}	
+		} // FIN DECISION SHOOT // 
+		
+		// SI NOTRE ADVERSAIRE VA VISER // 
+		else if(predAdv.equals("AIM"))
+		{
+			if(shootMia) // Si on peut tirer // 
+			{
+				if(adve.getNbVies()<=pdvCritique){ // Si il a peu de point de vie // 
+					s = "SHOOT"; 
+					decisionPrise = true; 
+				}
+				else if(coverMia||adve.getNbVies()>pdvCritique){
+					s = "AIM"; 
+					decisionPrise = true; 
+				}
+				else{
+					s = "SHOOT"; 
+					decisionPrise = true; 
+				}
+			}
+			else
+			{
+				 s = "RELOAD"; 
+				 decisionPrise = true; 
+			}
+		} // FIN ADVERSAIRE VISER // 
+		
+		else if(predAdv.equals("COVER")){
+			
+				// Si on peut tirer // 
+				if(shootMia){
+					if(dernierMia.equals("AIM")){
+						s = "AIM"; 
+						decisionPrise = true; 
+					}
+					else if(adve.getNbVies()<=this.pdvCritique){
+						s = "SHOOT";
+						decisionPrise = true; 
+					}
+				}
+				else{   // Sinon // 
+					 s = "RELOAD"; 
+					 decisionPrise = true; 
+				}
+		}
+		else if(predAdv.equals("RELOAD")){
+				if(shootMia){
+					if(dernierMia.equals("AIM")){
+						s = "SHOOT"; 
+						decisionPrise = true; 
+					}
+					else if(adve.getNbVies()<=this.pdvCritique){
+						s = "SHOOT"; 
+						decisionPrise = true; 
+					}
+				}
+				else{   // Sinon // 
+				 s = "RELOAD";
+				 decisionPrise = true; 
+				}	
+		}
+		else if(predAdv.equals("NA")){
+			
+			System.out.println("\n\n ------------------------DANS NA");
+			if(shootMia){
+				if(dernierMia.equals("RELOAD")){
+					s = "AIM"; 
+					decisionPrise = true; 
+				}
+				else {
+					s = "SHOOT"; 
+					decisionPrise = true; 
+				}
+			}
+			else{   // Sinon // 
+			 s = "RELOAD";
+			 decisionPrise = true; 
+			}	
+		}
+		return s; 
+	}
 	
+
+	
+
+
+
+
+
 	private enum Coups {
 		SHOOT, RELOAD, COVER, AIM;
 	}
