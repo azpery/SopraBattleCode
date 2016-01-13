@@ -5,10 +5,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
-
-
-
 	public class Main {
 	
 		  String idPartie = ""; 
