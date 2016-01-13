@@ -4,175 +4,145 @@ import java.util.ArrayList;
 
 
 import battleCode.Bot;
- 
+
 
 
 
 public class IA {
+	private ArrayList<Schema> schemas;
+	private ArrayList<Schema> schemasTrois;
+	private ArrayList<Schema> schemasDeux;
+	private ArrayList<Schema> schemasUn;
+	private ArrayList<Schema> schemasZero;
+    private int pdvCritique = 4;  // Niveau critique à éviter // 
 
 
-    int pdvCritique = 3;  // Niveau critique à éviter // 
-	
 	public IA(){
-		
-		
+		this.schemas = new ArrayList<Schema>();
+		this.schemasTrois = new ArrayList<Schema>();
+		this.schemasDeux = new ArrayList<Schema>();
+		this.schemasUn = new ArrayList<Schema>();
+		this.schemasZero = new ArrayList<Schema>();
 		
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	public boolean devinerCover(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup){
-		
+
 		boolean res = false;  
-		
-		
+
+
 		return res; 
 	}
-	
+
 	public boolean devinerShoot(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup){
-		
+
 		boolean res = false;  
-		
-		
+
+
 		return res; 
 	}
-	
+
 	public boolean devinerAIM(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup){
-		
+
 		boolean res = false;  
-		
-		
+
+
 		return res; 
 	}
-	
+
 	public boolean devinerReload(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup){
-		
+
 		boolean res = false;  
-		
-		
+
+
 		return res; 
 	}
-	
-	
-	/*
-	public String analyseHabits(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coups,String dernierCoup){
-		String move="";
-		int nbCoups = coups.size();
-		int reload = 0;
-		int shoot = 0;
-		int cover = 0;
-		int aim = 0; 
-		Coups valCoup;
-		String coup;
-		
-		
-		for(int i = 0; i < nbCoups; i++){
-			coup = (String) coups.get(i);
-			if(coup == dernierCoup){
-				valCoup = Coups.valueOf(coup);
-				switch(valCoup){
-				case SHOOT:
-					shoot++;
-					break;
-				case AIM:
-					aim++;
-					break;
-				case COVER:
-					cover++;
-					break;
-				case RELOAD: 
-					reload++;
-					break;
-				}
-			}
-		}
-		int max =  Math.max(Math.max(Math.max(shoot,reload),cover),aim);
-		
-		
-		if(max == reload) {
-			if (miage.getNbBullet()== 0&&dernierCoup!="AIM"){
-				move = "RELOAD";
-			} else {
-				move = "SHOOT";
-			}
-		}
-		if(max == shoot) {
-			move = "COVER";
-		}
-		if(max == cover) {
-			move = "RELOAD";
-		}
-		if(max == aim) {
-			if (miage.getNbBullet()> 0){
-				move = "SHOOT";
-			} else {
-				move = "RELOAD";
-			}
-		}
-		
-		System.out.println("\n\n\n Coup A JOUER :" + move);
-		
-		return move;
-		
-	}
-	*/
-	
-	
+
 
 	public String devinerFuturCoup(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup,int nbCoupRestant)
 	{
 		String c = "NA"; 
-		
+		this.schemas = new ArrayList<Schema>();
+		this.schemasZero = new ArrayList<Schema>();
+		this.schemasUn = new ArrayList<Schema>();
+		this.schemasDeux = new ArrayList<Schema>();
+		this.schemasTrois = new ArrayList<Schema>();
 		if(!dernierCoup.equals("NA"))
 		{
-			System.out.println("AJOUTER");
 			coupsAdv.add(dernierCoup); 
 		}
-		// ON UTILISE LE MODELE // 
-		/*
-		// On regarde si le dernier coup joué par l'adversaire à déjà été fait //
-		if(coupsAdv.contains(dernierCoup)){
-	
-			if(coupsAdv.size()>2)
-			{
-				System.out.println("TAILLE TAB" + coupsAdv.size());
-				for(int i =0;i<coupsAdv.size()-1;i++)
-				{
-					String s = coupsAdv.get(i);
-					if(s.equals(dernierCoup))
-					{
-						int pos = coupsAdv.indexOf(dernierCoup); 
-						System.out.println("POSITION : " +  pos);
-						System.out.println("TailleTaa" + coupsAdv.size());
-						if(pos < coupsAdv.size()-2)
-						{
-							System.out.println("Ce coup a été joué par l'adversaire " + dernierCoup + " Au coup : " + pos*2);
-							c = coupsAdv.get(pos+1); 
-						}
-					}
+		
+		if(coupsAdv.size() > 2){
+			Schema cible = new Schema(dernierCoup, coupsAdv.get(coupsAdv.size() - 2), coupsMiagic.get(coupsMiagic.size() - 1));
+			//this.schemas.add(cible);
+			int i ;
+			for(i = 1; i <= coupsAdv.size() - 2; i++){
+				if(coupsAdv.get(i).equals(dernierCoup)){
+					Schema s = new Schema(coupsAdv.get(i),coupsAdv.get(i-1),coupsMiagic.get(i));
+					s.setCoupSuivant(coupsAdv.get(i+1));
+					this.schemas.add(s);
 				}
 			}
-		}	
-		*/
+			for(i = 0 ; i <= this.schemas.size() - 1 ; i++){
+				Schema leSchema = this.schemas.get(i);
+				leSchema.comparer(cible);
+				switch(this.schemas.get(i).getPuissance()){
+				case 3:
+					this.schemasTrois.add(leSchema);
+					break;
+				case 2:
+					this.schemasDeux.add(leSchema);
+					break;
+				case 1: 
+					this.schemasUn.add(leSchema);
+					break;
+				case 0:
+					this.schemasZero.add(leSchema);
+					break;
+				}
+
+			}
+			if(this.schemasTrois.size()>0){
+				c = Schema.comparerValeurCoupsSuivant(this.schemasTrois);
+			} else 
+				if(this.schemasDeux.size()>0){
+					c = Schema.comparerValeurCoupsSuivant(this.schemasDeux);
+				} else 
+					if(this.schemasUn.size()>0){
+						c = Schema.comparerValeurCoupsSuivant(this.schemasUn);
+					} else 
+						if(this.schemasZero.size()>0){
+							c = Schema.comparerValeurCoupsSuivant(this.schemasZero);
+						} 
+
+		}
+
 		// SI DEFAUT // 
+ 
 		if(c == "NA"){
 			
-			if(miage.getNbBullet()>0)
+	
+			if(adve.getNbBullet()>0)
 			{	
-				if(coupsMiagic.size()>0){
-					System.out.println("**** DGETBULLET \n\n\n\n\n");
+				if( dernierCoup.equals("AIM")){
+					c = "SHOOT"; 
+				}
+				
+				if( dernierCoup.equals("RELOAD")){
+					c = "AIM"; 
 				}
 			}
-			if(adve.getNbBullet()>0 && dernierCoup.equals("AIM")){
-						c = "SHOOT"; 
-			}
-			
-			if(adve.getNbBullet()==0 ){
+			else if(adve.getNbBullet()==0 ){
 				if(coupsMiagic.size()>0){
 					if(!coupsMiagic.get(coupsMiagic.size()-1).equals("AIM")){
 						c= "RELOAD";
+					}
+					else if(adve.getNbBouclier()>0){
+						c= "COVER";
 					}
 				}
 				else{
@@ -180,7 +150,7 @@ public class IA {
 					}	
 			}
 		}
-		System.out.println("\n\n\n FUTUR COUP JOUER PAR ADV :" + c);
+		System.out.println("\n FUTUR COUP JOUER PAR ADV :" + c);
 		
 		String dernierCoupMiage = "";
 		if(coupsMiagic.size()>0){
@@ -193,16 +163,22 @@ public class IA {
 		c = deciderAction(dernierCoup,c,dernierCoupMiage,miage,adve);
 		
 		System.out.println("ON VA JOUER : " + c);
+		
 		return  c; 
 	}
+
+
 	
-	
+
+
 	public String deciderAction(String dernierAdv,String predAdv,String dernierMia,Bot miage,Bot adve){
 		String s =""; 
 		boolean decisionPrise = false; 
 
 		boolean shootMia 	  = false; 
 		boolean coverMia	  = false; 
+		
+		boolean coverAdv 	  = false; 
 	   
 	
 	    if(miage.getNbBullet()>0){
@@ -211,9 +187,18 @@ public class IA {
 	    if(miage.getNbBouclier()>0){
     		coverMia = true; 
 	    }
-		
+		if(adve.getNbBouclier()>0){
+			coverAdv = true; 
+		}
+	    
+	    if(dernierMia.equals("AIM")&&dernierAdv.equals("SHOOT")&&adve.getNbVies()>=this.pdvCritique){
+	    	s = "AIM"; 
+	    	decisionPrise = true; 
+	    	
+	    }
+	    
 		// SI NOTRE ADVERSAIRE VA TIRER // 
-		if(predAdv.equals("SHOOT"))
+		if(predAdv.equals("SHOOT")&&!decisionPrise)
 		{
 		  
 			// SOUS CONTRAITES -> TIRER + CACHER // 
@@ -231,10 +216,18 @@ public class IA {
 						s = "COVER";
 						decisionPrise=true; 
 					}
-					if(dernierAdv.equals("AIM")){
+					else if(dernierAdv.equals("AIM")){
 						s="COVER"; 
 						decisionPrise=true; 
 					}
+					else if(dernierMia.equals("AIM")&&adve.getNbVies()>=this.pdvCritique){
+						s="SHOOT"; 
+						decisionPrise=true; 
+					}
+					else{
+						s = "COVER"; 
+					}
+					
 				}	
 				// ****** SHOOT ***** // 
 				if(!decisionPrise){				// Si pas de décision prise // 
@@ -250,7 +243,7 @@ public class IA {
 		} // FIN DECISION SHOOT // 
 		
 		// SI NOTRE ADVERSAIRE VA VISER // 
-		else if(predAdv.equals("AIM"))
+		else if(predAdv.equals("AIM")&&!decisionPrise)
 		{
 			if(shootMia) // Si on peut tirer // 
 			{
@@ -258,7 +251,7 @@ public class IA {
 					s = "SHOOT"; 
 					decisionPrise = true; 
 				}
-				else if(coverMia||adve.getNbVies()>pdvCritique){
+				else if(adve.getNbVies()>pdvCritique&&dernierAdv.equals("SHOOT")){
 					s = "AIM"; 
 					decisionPrise = true; 
 				}
@@ -274,25 +267,31 @@ public class IA {
 			}
 		} // FIN ADVERSAIRE VISER // 
 		
-		else if(predAdv.equals("COVER")){
+		else if(predAdv.equals("COVER")&&!decisionPrise){
 			
 				// Si on peut tirer // 
 				if(shootMia){
-					if(dernierMia.equals("AIM")){
+					if(dernierMia.equals("AIM")&&coverAdv){
 						s = "AIM"; 
 						decisionPrise = true; 
 					}
-					else if(adve.getNbVies()<=this.pdvCritique){
+					else if(!coverAdv){   
+						if(adve.getNbVies()>pdvCritique){
+							s = "AIM";
+						}
+						else{
 						s = "SHOOT";
 						decisionPrise = true; 
+						}
 					}
+					
 				}
 				else{   // Sinon // 
 					 s = "RELOAD"; 
 					 decisionPrise = true; 
 				}
 		}
-		else if(predAdv.equals("RELOAD")){
+		else if(predAdv.equals("RELOAD")&&!decisionPrise){
 				if(shootMia){
 					if(dernierMia.equals("AIM")){
 						s = "SHOOT"; 
@@ -300,6 +299,10 @@ public class IA {
 					}
 					else if(adve.getNbVies()<=this.pdvCritique){
 						s = "SHOOT"; 
+						decisionPrise = true; 
+					}
+					else{
+						s = "AIM"; 
 						decisionPrise = true; 
 					}
 				}
@@ -308,9 +311,9 @@ public class IA {
 				 decisionPrise = true; 
 				}	
 		}
-		else if(predAdv.equals("NA")){
+		else if(predAdv.equals("NA")&&!decisionPrise){
 			
-			System.out.println("\n\n ------------------------DANS NA");
+			
 			if(shootMia){
 				if(dernierMia.equals("RELOAD")){
 					s = "AIM"; 
@@ -330,15 +333,10 @@ public class IA {
 	}
 	
 
-	
-
-
-
-
 
 	private enum Coups {
 		SHOOT, RELOAD, COVER, AIM;
 	}
-   }
+}
 
-	
+

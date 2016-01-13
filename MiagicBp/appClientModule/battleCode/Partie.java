@@ -127,9 +127,10 @@ public static String get(String url) throws IOException{
     	
     	if(statut.equals("CANPLAY")){
     	 
-    		ia.devinerFuturCoup(this.botMiagic,this.botAdverse,coupsMia,coupsAdv,getDernierCoup(),coutRestant);
-    		
-    		System.out.println("IFFFF Statut partie = " + statut);
+    		String c = ia.devinerFuturCoup(this.botMiagic,this.botAdverse,coupsMia,coupsAdv,getDernierCoup(),coutRestant);
+    		System.out.println("CANPLAY coup : on joue" + c);
+    		Thread.sleep(2500);
+    	
     		
     		try {
 				System.out.println(getBoard());
@@ -142,7 +143,7 @@ public static String get(String url) throws IOException{
     		
     		
 			// Prise de décision // 
-			String c = coup();
+			coup(c);
 			coupsMia.add(c);
 			
 			
@@ -226,12 +227,10 @@ public static String get(String url) throws IOException{
 
 
     
-    public String coup() throws IOException{
+    public String coup(String c) throws IOException{
     	
-    	System.out.println("Quel coup ? "); 
     	
-    	Scanner sc = new Scanner(System.in); 
-    	String coup = sc.next();
+    	String coup = c;
     	
     	System.out.println(get("http://www.battlearena.io/battle-ws/duel/game/play/"+idPartie+"/"+idEquipe+"/"+coup));
     	
