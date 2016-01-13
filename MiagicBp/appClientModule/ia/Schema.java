@@ -1,7 +1,7 @@
 package ia;
 
 
-public class decision {
+public class Schema {
 	
 
 	

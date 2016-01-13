@@ -15,6 +15,8 @@ public class Partie {
 	private int lvlmin = 1; 
 	private int lvlmax = 6;
 	
+	private int coutRestant = 0; 
+	
 	private String idPartie; 
 	private String idEquipe; 
    
@@ -125,7 +127,7 @@ public static String get(String url) throws IOException{
     	
     	if(statut.equals("CANPLAY")){
     	 
-    		ia.analyseHabits(this.botMiagic,this.botAdverse,coupsMia,coupsAdv,getDernierCoup());
+    		ia.devinerFuturCoup(this.botMiagic,this.botAdverse,coupsMia,coupsAdv,getDernierCoup(),coutRestant);
     		
     		System.out.println("IFFFF Statut partie = " + statut);
     		
@@ -139,13 +141,13 @@ public static String get(String url) throws IOException{
     		
     		
     		
-			// Prise de d���cision // 
+			// Prise de décision // 
 			String c = coup();
 			coupsMia.add(c);
 			
 			
     		
-			System.out.println(c);
+			System.out.println("Coup joué :" +c);
 			
     	}
         
@@ -192,6 +194,8 @@ public static String get(String url) throws IOException{
     	botAdverse.setNbBullet(tokens[6]);
     	
     	botAdverse.setNbBouclier(tokens[7]);
+    	
+    	this.coutRestant = Integer.parseInt(tokens[8]);
     }
     
 	
@@ -229,7 +233,9 @@ public static String get(String url) throws IOException{
     	Scanner sc = new Scanner(System.in); 
     	String coup = sc.next();
     	
-	    return get("http://www.battlearena.io/battle-ws/duel/game/play/"+idPartie+"/"+idEquipe+"/"+coup);
+    	System.out.println(get("http://www.battlearena.io/battle-ws/duel/game/play/"+idPartie+"/"+idEquipe+"/"+coup));
+    	
+	    return coup;
 
     }
     

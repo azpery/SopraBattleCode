@@ -10,12 +10,12 @@ import battleCode.Bot;
 
 public class IA {
 
-	private ArrayList<String> coups; 
+
     
 	
 	public IA(){
 		
-		coups = new ArrayList<String>(); 
+		
 		
 	}
 	
@@ -56,7 +56,7 @@ public class IA {
 	}
 	
 	
-	
+	/*
 	public String analyseHabits(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coups,String dernierCoup){
 		String move="";
 		int nbCoups = coups.size();
@@ -117,48 +117,79 @@ public class IA {
 		return move;
 		
 	}
+	*/
 	
-	
-	public String devinerFuturCoup(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup)
+	public String devinerFuturCoup(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup,int nbCoupRestant)
 	{
-		
-		
 		String c = "NA"; 
 		
-		coupsAdv.add(dernierCoup); 
-		
+		if(!dernierCoup.equals("NA"))
+		{
+			System.out.println("AJOUTER");
+			coupsAdv.add(dernierCoup); 
+		}
+		// ON UTILISE LE MODELE // 
+		/*
 		// On regarde si le dernier coup joué par l'adversaire à déjà été fait //
 		if(coupsAdv.contains(dernierCoup)){
-			
-			int pos = coupsAdv.indexOf(dernierCoup); 
-			
-			if(pos < coupsAdv.size()-1){
-			c = coupsAdv.get(pos+1); 
-			
-			}
-		}
-		// Si pas de prédiction alors // 
-		if(c == "NA"){
-			
-			
-			if(coupsMiagic.size()>0){	
-				if(coupsMiagic.get(coupsMiagic.size()-1)=="AIM"){
-					c = "COVER";
+	
+			if(coupsAdv.size()>2)
+			{
+				System.out.println("TAILLE TAB" + coupsAdv.size());
+				for(int i =0;i<coupsAdv.size()-1;i++)
+				{
+					String s = coupsAdv.get(i);
+					if(s.equals(dernierCoup))
+					{
+						int pos = coupsAdv.indexOf(dernierCoup); 
+						System.out.println("POSITION : " +  pos);
+						System.out.println("TailleTaa" + coupsAdv.size());
+						if(pos < coupsAdv.size()-2)
+						{
+							System.out.println("Ce coup a été joué par l'adversaire " + dernierCoup + " Au coup : " + pos*2);
+							c = coupsAdv.get(pos+1); 
+						}
+					}
 				}
 			}
+		}	
+		*/
+		// SI DEFAUT // 
+		if(c == "NA"){
 			
-			
-			if(adve.getNbBullet()==0&&c!="COVER"){
-				
-				    c= "RELOAD";
+			if(miage.getNbBullet()>0)
+			{	
+				if(coupsMiagic.size()>0){
+					System.out.println("**** DGETBULLET \n\n\n\n\n");
+
+					if(coupsMiagic.get(coupsMiagic.size()-1).equals("AIM")){
+						c = "COVER";
+					}
+				}
+			}
+			if(adve.getNbBullet()>0 && coupsAdv.get(coupsAdv.size()-1).equals("AIM")){
+						c = "SHOOT"; 
 			}
 			
-			if(adve.getNbBouclier()==0&&c=="COVER"){
-				    
-				c = "NA";
+			if(adve.getNbBullet()==0 ){
+				if(coupsMiagic.size()>0){
+					if(!coupsMiagic.get(coupsMiagic.size()-1).equals("AIM")){
+						c= "RELOAD";
+					}
+				}
+				else{
+						c= "RELOAD";
+					}	
 			}
-		
-			
+			/*
+			else if(adve.getNbBouclier()==0){
+				if(coupsMiagic.size()>0){
+					if(!coupsMiagic.get(coupsMiagic.size()-1).equals("AIM")){
+						c = "NA";
+					}
+				}
+			}
+			*/
 		}
 		System.out.println("\n\n\n FUTUR COUP JOUER PAR ADV :" + c);
 		return  c; 
