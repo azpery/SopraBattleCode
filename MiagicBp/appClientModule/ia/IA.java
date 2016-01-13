@@ -30,6 +30,32 @@ public class IA {
 		return res; 
 	}
 	
+	public boolean devinerShoot(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup){
+		
+		boolean res = false;  
+		
+		
+		return res; 
+	}
+	
+	public boolean devinerAIM(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup){
+		
+		boolean res = false;  
+		
+		
+		return res; 
+	}
+	
+	public boolean devinerReload(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup){
+		
+		boolean res = false;  
+		
+		
+		return res; 
+	}
+	
+	
+	
 	
 	
 	public String devinerFuturCoup(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup)
