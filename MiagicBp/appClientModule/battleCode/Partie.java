@@ -1,3 +1,4 @@
+package battleCode;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,21 +20,23 @@ public class Partie {
    
 	private String statut;
 	
-	private Robot botMiagic;  
-	private Robot botAdverse;
+	private Bot botMiagic;  
+	private Bot botAdverse;
 
 	private IA ia; 
 	private ArrayList<String> coupsAdv; 
+	private ArrayList<String> coupsMia;
 	
 	
 	public Partie(String idEquipe){
 		
 		this.idEquipe = idEquipe; 
 	    
-		botMiagic = new Robot(idEquipe, 0, 0, 0, false); 
-		botAdverse = new Robot(idEquipe, 0, 0, 0, false); 
+		botMiagic = new Bot(idEquipe, 0, 0, 0, false); 
+		botAdverse = new Bot(idEquipe, 0, 0, 0, false); 
 		
 		coupsAdv = new ArrayList<String>(); 
+		coupsMia = new ArrayList<String>(); 
 		
 		ia = new IA();
 	
@@ -122,7 +125,7 @@ public static String get(String url) throws IOException{
     	
     	if(statut.equals("CANPLAY")){
     	 
-    		ia.devinerFuturCoup(coupsAdv,getDernierCoup() );
+    		ia.devinerFuturCoup(this.botMiagic,this.botAdverse,coupsMia,coupsAdv,getDernierCoup() );
     		
     		System.out.println("IFFFF Statut partie = " + statut);
     		
@@ -137,8 +140,13 @@ public static String get(String url) throws IOException{
     		
     		
 			// Prise de d���cision // 
+			String c = coup();
+			coupsMia.add(c);
 			
-			System.out.println(coup());
+			
+    		
+			System.out.println(c);
+			
     	}
         
         	

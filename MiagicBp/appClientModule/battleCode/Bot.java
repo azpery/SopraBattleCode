@@ -1,6 +1,7 @@
+package battleCode;
 import ia.IA;
 
-public class Robot {
+public class Bot {
 
     private String numJoeur; 
 	private int nbVies; 
@@ -9,7 +10,7 @@ public class Robot {
     private boolean focused;
     public IA i; 
     
-    public Robot(String numJoueur,int nbVies,int nbBullet,int nbBouclier,boolean focused){
+    public Bot(String numJoueur,int nbVies,int nbBullet,int nbBouclier,boolean focused){
     	
     	this.focused= focused; 
     	this.nbVies = nbVies; 
