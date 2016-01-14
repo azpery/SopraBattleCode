@@ -66,6 +66,8 @@ public class IA {
 	public String devinerFuturCoup(Bot miage,Bot adve,ArrayList<String> coupsMiagic,ArrayList<String> coupsAdv,String dernierCoup,int nbCoupRestant)
 	{
 		String c = "NA"; 
+		String avDernierCoupM = "NA";
+		String avDernierCoupA = "NA"; 
 		this.schemas = new ArrayList<Schema>();
 		this.schemasZero = new ArrayList<Schema>();
 		this.schemasUn = new ArrayList<Schema>();
@@ -160,7 +162,15 @@ public class IA {
 			dernierCoupMiage = "NA";
 		}
 
-		c = deciderAction(dernierCoup,c,dernierCoupMiage,miage,adve);
+		
+		if(coupsMiagic.size()>1){
+			avDernierCoupM = coupsMiagic.get(coupsMiagic.size()-2); 
+		}
+		if(coupsAdv.size()>1){
+			avDernierCoupA = coupsAdv.get(coupsMiagic.size()-2); 
+		}
+		
+		c = deciderAction(avDernierCoupA,dernierCoup,c,avDernierCoupM,dernierCoupMiage,miage,adve);
 
 		System.out.println("ON VA JOUER : " + c);
 
@@ -169,9 +179,7 @@ public class IA {
 
 
 
-
-
-	public String deciderAction(String dernierAdv,String predAdv,String dernierMia,Bot miage,Bot adve){
+	public String deciderAction(String avdernierAdv,String dernierAdv,String predAdv,String avdernierMia,String dernierMia,Bot miage,Bot adve){
 		String s =""; 
 		boolean decisionPrise = false; 
 
@@ -179,7 +187,7 @@ public class IA {
 		boolean coverMia	  = false; 
 
 		boolean coverAdv 	  = false; 
-
+        
 
 		if(miage.getNbBullet()>0){
 			shootMia = true; 
@@ -190,8 +198,26 @@ public class IA {
 		if(adve.getNbBouclier()>0){
 			coverAdv = true; 
 		}
-
-		if(dernierMia.equals("AIM")&&dernierAdv.equals("SHOOT")&&adve.getNbVies()>=this.pdvCritique){
+		
+        
+		
+		if(predAdv.equals("BOMB")){
+			if(shootMia){
+			s = "SHOOT";
+			decisionPrise = true; 
+			}	
+		}		
+         /// Partie protection bombe // 
+		if(avdernierAdv.equals("BOMB")&&!avdernierMia.equals("SHOOT")&&coverMia){
+			s = "COVER"; 
+			decisionPrise=true; 			
+		}
+		if(dernierAdv.equals("BOMB")&&!dernierMia.equals("SHOOT")&&miage.getNbBouclier()>2){
+			s = "COVER"; 
+			decisionPrise=true; 			
+		}
+		// 
+		if(dernierMia.equals("AIM")&&dernierAdv.equals("SHOOT")&&adve.getNbVies()>=this.pdvCritique&&!decisionPrise){
 			s = "AIM"; 
 			decisionPrise = true; 
 
@@ -319,8 +345,11 @@ public class IA {
 		}
 		else if(predAdv.equals("NA")){
 
+			if(miage.getNbBombe()>0){
+				s = "BOMB";
+			}
 
-			if(shootMia){
+			else if(shootMia){
 				if(miage.getNbBullet()>0&&adve.getNbVies()>=pdvCritique){
 					s = "AIM"; 
 					decisionPrise = true; 
