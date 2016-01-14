@@ -12,7 +12,7 @@ public class Schema {
 	private String coupSuivant="NA";
 	private int puissance = 0;
 	private enum Coups {
-		SHOOT, RELOAD, COVER, AIM, NA;
+		SHOOT, RELOAD, COVER, AIM, NA, BOMB;
 	}
 	
 
@@ -40,7 +40,8 @@ public class Schema {
 		int reload = 0;
 		int shoot = 0;
 		int cover = 0;
-		int aim = 0; 
+		int aim = 0;
+		int bomb = 0; 
 		Coups valCoup;
 		for(int i = 0; i <= s.size() - 1; i++){
 			valCoup = Coups.valueOf(s.get(i).getCoupSuivant());
@@ -63,21 +64,29 @@ public class Schema {
 			case RELOAD: 
 				reload++;
 				break;
+				case BOMB: 
+					if(adve.getNbBomb()>0){
+						bomb++;
+					}
+				break;
+			
 			}
+			
 		}
-		int max =  Math.max(Math.max(Math.max(shoot,reload),cover),aim);
+		int max =  Math.max(Math.max(Math.max(shoot,Math.max(bomb,reload)),cover),aim);
 		ArrayList<String> maxs=new ArrayList<String>();
 		if(shoot==max){maxs.add("SHOOT");}
 		if(aim==max){maxs.add("AIM");}
 		if(cover==max){maxs.add("COVER");}
+		if(bomb==max){maxs.add("BOMB");}
 		if(reload==max){maxs.add("RELOAD");}
 		if(maxs.size()==1){vretour=maxs.get(0);}
-		if(maxs.size()==2){
+		if(maxs.size()==2|| maxs.size() == 3){
 			Random rand = new Random();
 			int randomNum = rand.nextInt(1);
 			vretour=maxs.get(randomNum);
 		}
-		if(maxs.size() == 3 || maxs.size() == 4){
+		if(maxs.size() == 4 || maxs.size() == 5){
 			vretour = "NA";
 		}
 		return vretour;

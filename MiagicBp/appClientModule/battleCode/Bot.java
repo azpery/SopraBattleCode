@@ -6,6 +6,7 @@ public class Bot {
     private String numJoeur; 
 	private int nbVies; 
     private int nbBullet; 
+    private int nbBomb; 
     private int nbBouclier; 
     private boolean focused;
     public IA i; 
@@ -68,6 +69,17 @@ public class Bot {
 		
 		return s; 
 		
+	}
+
+
+
+
+	public int getNbBomb() {
+		return nbBomb;
+	}
+
+	public void setNbBomb(int nbBomb) {
+		this.nbBomb = nbBomb;
 	}
 	
 }
