@@ -6,9 +6,9 @@ public class Bot {
     private String numJoeur; 
 	private int nbVies; 
     private int nbBullet; 
-    private int nbBomb; 
     private int nbBouclier; 
     private boolean focused;
+    private int nbBombe; 
     public IA i; 
     
     public Bot(String numJoueur,int nbVies,int nbBullet,int nbBouclier,boolean focused){
@@ -56,6 +56,12 @@ public class Bot {
 	public boolean isFocused() {
 		return focused;
 	} 
+	public int getNbBombe() {
+		return nbBombe;
+	}
+	public void setNbBombe(int nbBombe) {
+		this.nbBombe = nbBombe;
+	}
     
 	
 
@@ -69,17 +75,6 @@ public class Bot {
 		
 		return s; 
 		
-	}
-
-
-
-
-	public int getNbBomb() {
-		return nbBomb;
-	}
-
-	public void setNbBomb(int nbBomb) {
-		this.nbBomb = nbBomb;
 	}
 	
 }

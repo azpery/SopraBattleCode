@@ -65,7 +65,7 @@ public class Schema {
 				reload++;
 				break;
 				case BOMB: 
-					if(adve.getNbBomb()>0){
+					if(adve.getNbBombe()>0){
 						bomb++;
 					}
 				break;
