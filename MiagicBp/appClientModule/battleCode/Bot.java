@@ -78,10 +78,5 @@ public class Bot {
 		return s; 
 		
 	}
-
-
-
-
-
 	
 }
