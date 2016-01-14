@@ -8,7 +8,7 @@ public class Bot {
     private int nbBullet; 
     private int nbBouclier; 
     private boolean focused;
-    private int nbBombe; 
+    private int nbBombe = 2; 
     public IA i; 
     
     public Bot(String numJoueur,int nbVies,int nbBullet,int nbBouclier,boolean focused){
@@ -18,6 +18,8 @@ public class Bot {
     	this.nbBullet = nbBullet; 
     	this.nbBouclier = nbBouclier; 
     	this.numJoeur = numJoueur; 
+    	this.nbBombe = nbBombe; 
+    	
     	i = new IA(); 
     	
     }
