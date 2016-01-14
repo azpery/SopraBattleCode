@@ -71,7 +71,7 @@ public class Partie {
     		Scanner sc = new Scanner(System.in); 
     		lvl= sc.nextInt();
     		}
-    		idPartie =  get("http://www.battlearena.io/battle-ws/duel/practice/new/"+lvl+"/"+idEquipe);   	
+    		idPartie =  get("http://www.ec2-52-31-147-77.eu-west-1.compute.amazonaws.com/battle-ws/duel/practice/new/"+lvl+"/"+idEquipe);   	
     		System.out.println("id partie : " + idPartie);
     	}
     	
@@ -244,18 +244,18 @@ public static String get(String url) throws IOException{
     
     
     public  void majStatut() throws IOException{
-    	statut =  get("http://www.battlearena.io/battle-ws/duel/game/status/"+idPartie+"/"+idEquipe);
+    	statut =  get("http://www.ec2-52-31-147-77.eu-west-1.compute.amazonaws.com/battle-ws/duel/game/status/"+idPartie+"/"+idEquipe);
     }
     
     public  String getBoard() throws IOException{
     	System.out.println("Dans get board"); 
-    	return get("http://www.battlearena.io/battle-ws/duel/game/board/"+idPartie+"?format=String)");
+    	return get("http://www.ec2-52-31-147-77.eu-west-1.compute.amazonaws.com/battle-ws/duel/game/board/"+idPartie+"?format=String)");
     }
     
     
     public String getDernierCoup() throws IOException{
     
-    	String s=  get("http://www.battlearena.io/battle-ws/duel/game/getlastmove/"+idPartie+"/"+idEquipe);
+    	String s=  get("http://www.ec2-52-31-147-77.eu-west-1.compute.amazonaws.com/battle-ws/duel/game/getlastmove/"+idPartie+"/"+idEquipe);
     	System.out.println("\n\n\n\n\n DERNIER COUP JOUE " + s);
     	return s; 
     }
@@ -265,7 +265,7 @@ public static String get(String url) throws IOException{
     	
     	String coup = c;
     	
-    	System.out.println(get("http://www.battlearena.io/battle-ws/duel/game/play/"+idPartie+"/"+idEquipe+"/"+coup));
+    	System.out.println(get("http://www.ec2-52-31-147-77.eu-west-1.compute.amazonaws.com/battle-ws/duel/game/play/"+idPartie+"/"+idEquipe+"/"+coup));
     	
 	    return coup;
 
