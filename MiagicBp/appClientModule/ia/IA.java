@@ -216,7 +216,7 @@ public class IA {
 					s = "COVER";
 					decisionPrise=true; 
 				}
-				else if(dernierAdv.equals("AIM")){
+				else if(dernierAdv.equals("AIM")&&dernierMia.equals("SHOOT")){
 					s="COVER"; 
 					decisionPrise=true; 
 				}
@@ -278,9 +278,9 @@ public class IA {
 			if(shootMia){
 				if(dernierMia.equals("AIM")&&coverAdv){
 					s = "AIM"; 
-					decisionPrise = true; 
+					decisionPrise = true;
 				}
-				else if(!coverAdv){   
+				else{   
 					if(adve.getNbVies()>pdvCritique){
 						s = "AIM";
 					}
@@ -346,5 +346,3 @@ public class IA {
 		SHOOT, RELOAD, COVER, AIM;
 	}
 }
-
-

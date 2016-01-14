@@ -29,6 +29,7 @@ public class Partie {
 	private ArrayList<String> coupsAdv; 
 	private ArrayList<String> coupsMia;
 	
+	String nomEquipeServeur = "Miagic Bot";
 	
 	public Partie(String idEquipe){
 		
@@ -51,7 +52,7 @@ public class Partie {
 	 * @pre :
 	 * @post :
 	 */
-    public void initPartie() throws IOException{
+    public int initPartie() throws IOException{
     	
     	int i = -1 ;
     	while (i==-1)
@@ -78,6 +79,9 @@ public class Partie {
     		// On rejoind un versus // 
     	}
     
+    	
+    	return i; 
+    	
     }	
 	
 public static String get(String url) throws IOException{
@@ -126,9 +130,11 @@ public static String get(String url) throws IOException{
     	
     	
     	if(statut.equals("CANPLAY")){
-    	 
+    		
+    		// Prise de la décision // 
     		String c = ia.devinerFuturCoup(this.botMiagic,this.botAdverse,coupsMia,coupsAdv,getDernierCoup(),coutRestant);
     		System.out.println("CANPLAY coup : on joue" + c);
+    		// On attend // 
     		Thread.sleep(2500);
     	
     		
@@ -139,8 +145,6 @@ public static String get(String url) throws IOException{
 			}
     		
 			
-    		
-    		
     		
 			// Prise de décision // 
 			coup(c);
@@ -170,14 +174,23 @@ public static String get(String url) throws IOException{
 	
 	// Traitement Partie practice // 
     /*
+     * @pre Appeler majStatut() avant // 
      * @warning ATTENTION CETTE METHODE EST A MODIFIER SI LE FORMAT CHANGE DANS LE PRACTICE // 
      * @description : On suppose que le premier robot à jouer est le notre // 
      */
-    public void majRobotsPractice() throws IOException{
+    public void majRobots() throws IOException, InterruptedException{
     	
     	String[] tokens; 
     	tokens= Parser();
     	
+    	System.out.println("\n \n Joueur : " + tokens[0]);
+    	Thread.sleep(1000);
+    	
+    	if(tokens[0].equals(nomEquipeServeur))
+    	{
+    		
+        System.out.println("\n \n Dans Joueur nous sommes J1 \n\n\n");
+	
     	// MAJ VALEURS DE NOTRE BOT  // 
     	botMiagic.setNumJoeur("Joueur 1");
     	
@@ -197,12 +210,36 @@ public static String get(String url) throws IOException{
     	botAdverse.setNbBouclier(tokens[7]);
     	
     	this.coutRestant = Integer.parseInt(tokens[8]);
+    	}
+    	
+    	else if(tokens[4].equals(nomEquipeServeur))
+    	{
+    		
+    		
+            System.out.println("\n \n Dans Joueur nous sommes J2 \n\n\n");	
+    		
+        	// MAJ VALEURS DE l'ADVERSAIRE PRACTICE // 
+    		botAdverse.setNumJoeur("Joueur 1");
+        	
+    		botAdverse.setNbVies(tokens[1]);
+        	
+    		botAdverse.setNbBullet(tokens[2]);
+        	
+    		botAdverse.setNbBouclier(tokens[3]);
+        	
+    		// MAJ VALEURS DE NOTRE BOT  // 
+        	botMiagic.setNumJoeur("Joueur 2");
+        	
+        	botMiagic.setNbVies(tokens[5]);
+        	
+        	botMiagic.setNbBullet(tokens[6]);
+        	
+        	botMiagic.setNbBouclier(tokens[7]);
+        	
+        	this.coutRestant = Integer.parseInt(tokens[8]);	
+    		
+    	}
     }
-    
-	
-	
-	
-	
     
     
     public  void majStatut() throws IOException{
@@ -211,7 +248,7 @@ public static String get(String url) throws IOException{
     
     public  String getBoard() throws IOException{
     	System.out.println("Dans get board"); 
-    	return get("http://www.battlearena.io/battle-ws/duel/game/board/"+idPartie+"?format=JSON)");
+    	return get("http://www.battlearena.io/battle-ws/duel/game/board/"+idPartie+"?format=String)");
     }
     
     
@@ -221,11 +258,6 @@ public static String get(String url) throws IOException{
     	System.out.println("\n\n\n\n\n DERNIER COUP JOUE " + s);
     	return s; 
     }
-    
-    
-    
-
-
     
     public String coup(String c) throws IOException{
     	

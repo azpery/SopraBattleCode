@@ -20,21 +20,22 @@ import java.net.URL;
 		
 		
 		Partie p = new Partie(idEquipe); 
-		p.initPartie(); 
+		int choix = p.initPartie(); 
 		
 		
 		p.majStatut();
 		System.out.println("Dans moin statut : " + p.getStatut());
 	
 	    while(p.getStatut().equals("CANTPLAY")||p.getStatut().equals("CANPLAY")){
-		
-	    p.majRobotsPractice(); 	
+
+	    p.majRobots(); 	
 	    System.out.println(p);	
 	    
 	    p.Jouer();
 		p.majStatut();
 		
 	    }
+	    
 	    p.majStatut();
 	    System.out.println("FIN :"+ p.getStatut());
 	    
