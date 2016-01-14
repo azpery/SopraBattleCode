@@ -15,7 +15,7 @@ import java.net.URL;
 	public static void main(String[] args) throws IOException, InterruptedException {
 		
 	
-		String idEquipe = get("http://www.battlearena.io/battle-ws/duel/player/getIdEquipe/Miagic%20Bot/Universite2Nantes2016$");
+		String idEquipe = get("ec2-54-31-147-77.eu-wes-1.compute.amazonaws.com/duel/player/getIdEquipe/Miagic%20Bot/HarryPoterFaitDuDev!");
 		System.out.println(idEquipe); 
 		
 		
