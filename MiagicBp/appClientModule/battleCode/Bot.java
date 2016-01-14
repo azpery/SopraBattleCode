@@ -61,8 +61,8 @@ public class Bot {
 	public int getNbBombe() {
 		return nbBombe;
 	}
-	public void setNbBombe(int nbBombe) {
-		this.nbBombe = nbBombe;
+	public void setNbBombe(String nbBombe) {
+		this.nbBombe = Integer.parseInt(nbBombe);
 	}
     
 	

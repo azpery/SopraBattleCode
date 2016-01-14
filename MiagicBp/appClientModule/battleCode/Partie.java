@@ -191,53 +191,52 @@ public static String get(String url) throws IOException{
     	{
     		
         System.out.println("\n \n Dans Joueur nous sommes J1 \n\n\n");
-	
     	// MAJ VALEURS DE NOTRE BOT  // 
     	botMiagic.setNumJoeur("Joueur 1");
     	
     	botMiagic.setNbVies(tokens[1]);
+    	botMiagic.setNbBombe(tokens[2]);
+    	botMiagic.setNbBullet(tokens[3]);
     	
-    	botMiagic.setNbBullet(tokens[2]);
-    	
-    	botMiagic.setNbBouclier(tokens[3]);
+    	botMiagic.setNbBouclier(tokens[4]);
     	
     	// MAJ VALEURS DE l'ADVERSAIRE PRACTICE // 
     	botAdverse.setNumJoeur("Joueur 2");
     	
-    	botAdverse.setNbVies(tokens[5]);
+    	botAdverse.setNbVies(tokens[6]);
+    	botAdverse.setNbBombe(tokens[7]);
+    	botAdverse.setNbBullet(tokens[8]);
     	
-    	botAdverse.setNbBullet(tokens[6]);
+    	botAdverse.setNbBouclier(tokens[9]);
     	
-    	botAdverse.setNbBouclier(tokens[7]);
-    	
-    	this.coutRestant = Integer.parseInt(tokens[8]);
+    	this.coutRestant = Integer.parseInt(tokens[10]);
     	}
     	
-    	else if(tokens[4].equals(nomEquipeServeur))
+    	else if(tokens[5].equals(nomEquipeServeur))
     	{
     		
     		
             System.out.println("\n \n Dans Joueur nous sommes J2 \n\n\n");	
     		
         	// MAJ VALEURS DE l'ADVERSAIRE PRACTICE // 
-    		botAdverse.setNumJoeur("Joueur 1");
+            botAdverse.setNumJoeur("Joueur 1");
         	
-    		botAdverse.setNbVies(tokens[1]);
+            botAdverse.setNbVies(tokens[1]);
+            botAdverse.setNbBombe(tokens[2]);
+            botAdverse.setNbBullet(tokens[3]);
         	
-    		botAdverse.setNbBullet(tokens[2]);
+            botAdverse.setNbBouclier(tokens[4]);
         	
-    		botAdverse.setNbBouclier(tokens[3]);
-        	
-    		// MAJ VALEURS DE NOTRE BOT  // 
+        	// MAJ VALEURS DE l'ADVERSAIRE PRACTICE // 
         	botMiagic.setNumJoeur("Joueur 2");
         	
-        	botMiagic.setNbVies(tokens[5]);
+        	botMiagic.setNbVies(tokens[6]);
+        	botMiagic.setNbBombe(tokens[7]);
+        	botMiagic.setNbBullet(tokens[8]);
         	
-        	botMiagic.setNbBullet(tokens[6]);
+        	botMiagic.setNbBouclier(tokens[9]);
         	
-        	botMiagic.setNbBouclier(tokens[7]);
-        	
-        	this.coutRestant = Integer.parseInt(tokens[8]);	
+        	this.coutRestant = Integer.parseInt(tokens[10]);
     		
     	}
     }

@@ -126,9 +126,10 @@ public class IA {
 		// SI DEFAUT // 
 
 		if(c == "NA"){
-
-
-			if(adve.getNbBullet()>0)
+			if(adve.getNbBombe()>0&&dernierCoup.equals("BOMB")){
+				c = "BOMB"; 
+			}
+			else if(adve.getNbBullet()>0)
 			{	
 				if( dernierCoup.equals("AIM")){
 					c = "SHOOT"; 
@@ -152,6 +153,7 @@ public class IA {
 				}	
 			}
 		}
+//Fin du defaut//
 		System.out.println("\n FUTUR COUP JOUER PAR ADV :" + c);
 
 		String dernierCoupMiage = "";
