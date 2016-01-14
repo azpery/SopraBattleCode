@@ -129,7 +129,7 @@ public static String get(String url) throws IOException{
     	 
     		String c = ia.devinerFuturCoup(this.botMiagic,this.botAdverse,coupsMia,coupsAdv,getDernierCoup(),coutRestant);
     		System.out.println("CANPLAY coup : on joue" + c);
-    		Thread.sleep(2500);
+    		Thread.sleep(100);
     	
     		
     		try {
