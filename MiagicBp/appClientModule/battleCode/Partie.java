@@ -136,6 +136,7 @@ public static String get(String url) throws IOException{
     		System.out.println("CANPLAY coup : on joue" + c);
     		// On attend // 
     		Thread.sleep(2500);
+    		Thread.sleep(100);
     	
     		
     		try {

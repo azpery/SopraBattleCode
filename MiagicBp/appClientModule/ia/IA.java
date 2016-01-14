@@ -220,7 +220,7 @@ public class IA {
 					s="COVER"; 
 					decisionPrise=true; 
 				}
-				else if(dernierMia.equals("AIM")&&adve.getNbVies()>=this.pdvCritique&&miage.getNbVies()>this.pdvCritique){
+				else if(dernierMia.equals("AIM")&&adve.getNbVies()>=this.pdvCritique&&miage.getNbVies()>this.pdvCritique&&!decisionPrise){
 					s="SHOOT"; 
 					decisionPrise=true; 
 				}
@@ -244,7 +244,7 @@ public class IA {
 		} // FIN DECISION SHOOT // 
 
 		// SI NOTRE ADVERSAIRE VA VISER // 
-		else if(predAdv.equals("AIM"))
+		else if(predAdv.equals("AIM")&&!decisionPrise)
 		{
 			if(shootMia) // Si on peut tirer // 
 			{
@@ -272,17 +272,18 @@ public class IA {
 			}
 		} // FIN ADVERSAIRE VISER // 
 
-		else if(predAdv.equals("COVER")){
+		else if(predAdv.equals("COVER")&&!decisionPrise){
 
 			// Si on peut tirer // 
 			if(shootMia){
-				if(dernierMia.equals("AIM")&&coverAdv){
+				if(dernierMia.equals("AIM")&&adve.getNbBouclier()>1){
 					s = "AIM"; 
 					decisionPrise = true;
 				}
 				else{   
-					if(adve.getNbVies()>pdvCritique){
+					if(adve.getNbVies()>pdvCritique&&!dernierMia.equals("AIM")&&miage.getNbVies()>pdvCritique){
 						s = "AIM";
+						decisionPrise = true; 
 					}
 					else{
 						s = "SHOOT";
@@ -296,7 +297,7 @@ public class IA {
 				decisionPrise = true; 
 			}
 		}
-		else if(predAdv.equals("RELOAD")){
+		else if(predAdv.equals("RELOAD")&&!decisionPrise){
 			if(shootMia){
 				if(dernierMia.equals("AIM")){
 					s = "SHOOT"; 
